@@ -42,12 +42,12 @@ nat {
             description "access web01 from WAN"
             destination {
                 address 10.0.17.71
-                port 22,80
+                port 80
             }
             inbound-interface eth0
             protocol tcp
             translation {
-                address 10.0.5.100
+                address 10.0.6.5
             }
         }
     }

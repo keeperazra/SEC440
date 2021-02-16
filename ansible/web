@@ -1,0 +1,4 @@
+[web]
+10.0.5.100 hostname=web01
+10.0.5.101 hostname=web02
+

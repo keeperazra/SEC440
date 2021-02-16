@@ -1,0 +1,5 @@
+
+---
+collections:
+  - name: vyos.vyos
+    name: community.general

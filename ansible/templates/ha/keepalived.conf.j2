@@ -1,0 +1,14 @@
+vrrp_instance VI_1 {
+    state {{ vrrp_host_type }}
+    interface ens160
+    virtual_router_id 71
+    priority {{ vrrp_priority }}
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass ThisIsNotASecurePassword
+    }
+    virtual_ipaddress {
+        10.0.6.5/24
+    }
+}

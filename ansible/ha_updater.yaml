@@ -1,0 +1,71 @@
+---
+
+  - name: ha servers install
+    become: yes
+    hosts: ha
+    tasks:
+
+      - name: Install keepalived
+        ansible.builtin.package:
+            name: keepalived
+            state: present
+
+      - name: Apply config template
+        ansible.builtin.template:
+            src: templates/ha/keepalived.conf.j2
+            dest: /etc/keepalived/keepalived.conf
+            owner: root
+            group: root
+            mode: "0644"
+
+      - name: Restart keepalived service
+        ansible.builtin.service:
+            name: keepalived
+            state: restarted
+
+      - name: Install apache2
+        ansible.builtin.package:
+            name: apache2
+            state: present
+
+      - community.general.apache2_module:
+            state: present
+            name: proxy
+      - community.general.apache2_module:
+            state: present
+            name: proxy_http
+      - community.general.apache2_module:
+            state: present
+            name: proxy_ajp
+      - community.general.apache2_module:
+            state: present
+            name: rewrite
+      - community.general.apache2_module:
+            state: present
+            name: deflate
+      - community.general.apache2_module:
+            state: present
+            name: headers
+      - community.general.apache2_module:
+            state: present
+            name: proxy_balancer
+      - community.general.apache2_module:
+            state: present 
+            name: proxy_connect
+      - community.general.apache2_module:
+            state: present
+            name: proxy_html
+      - community.general.apache2_module:
+            state: present 
+            name: lbmethod_bytraffic
+
+      - name: Install apache2 config for proxy
+        ansible.builtin.copy:
+            src: templates/ha/ha.conf
+            dest: /etc/apache2/conf-enabled/ha.conf
+
+      - name: Restart apache2
+        ansible.builtin.service:
+            name: apache2
+            state: restarted
+

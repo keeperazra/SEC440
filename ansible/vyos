@@ -1,0 +1,7 @@
+[vyos]
+10.0.5.2 hostname=vyos01 wan_ip_addr=10.0.17.11 lan_ip_addr=10.0.5.2 opt_ip_addr=10.0.6.2
+10.0.5.3 hostname=vyos02 wan_ip_addr=10.0.17.51 lan_ip_addr=10.0.5.3 opt_ip_addr=10.0.6.3
+
+[vyos:vars]
+ansible_connection=ansible.netcommon.network_cli
+ansible_network_os=vyos.vyos.vyos

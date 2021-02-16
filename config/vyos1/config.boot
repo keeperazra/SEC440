@@ -5,6 +5,11 @@ high-availability {
             virtual-address 10.0.5.1/24
             vrid 51
         }
+        group optgroup1 {
+            interface eth2
+            virtual-address 10.0.6.1/24
+            vrid 61
+        }
         group wangroup1 {
             interface eth0
             virtual-address 10.0.17.71/24
@@ -22,6 +27,11 @@ interfaces {
         address 10.0.5.2/24
         description LAN
         hw-id 00:50:56:b3:ff:ac
+    }
+    ethernet eth2 {
+        address 10.0.6.2/24
+        description OPT
+        hw-id 00:50:56:b3:2b:4a
     }
     loopback lo {
     }
@@ -51,6 +61,15 @@ nat {
                 address masquerade
             }
         }
+        rule 20 {
+            outbound-interface eth0
+            source {
+                address 10.0.6.0/24
+            }
+            translation {
+                address masquerade
+            }
+        }
     }
 }
 protocols {
@@ -65,6 +84,7 @@ service {
     dns {
         forwarding {
             allow-from 10.0.5.0/24
+            allow-from 10.0.6.0/24
             listen-address 10.0.5.1
         }
     }
@@ -81,12 +101,19 @@ system {
         user alex {
             authentication {
                 encrypted-password $6$YQSEw9UrDI9p8or3$pjd2ZToji0gnYoH9XVPSPePJkh3FtTcuaKMRlqJl7rURJ9PlH.xHRUxCRbtDbEE98td7hmVjez76um0SUu6nq1
+                public-keys alex@xubuntu {
+                    key AAAAB3NzaC1yc2EAAAADAQABAAABgQCg1b/htShVK8JYIlJiBK2lKmDGYrASBS2ItEFdcOA5OWfLoObKM2U3rYa7k3XwGEzf6y9omSGu2+BlQoC30GTKzrb03vu3ClOD2fJ5mtqDMJqm9mFrqHpGZuQlg6X26iggNuA1dcZdzwh75ySfq8u+hUWmYfTncyKDQ8pl8sEFRiRrXM0e+xjxP4mdDXHCBXev0RkJxPYQ1uxH/CTdbq0ef1TjDB9c51zaX5Mu23WJIlwPqPjTipInUD1mU5O8+DN6gsQ4kpnHprfmatILoRlvSKjf5D2Eha/yMgLfh9ys1OrbAZTvvrd/9Sq+f+bp9/rqGYt8ex+Rd6zRKiTzvvEfRIqtbF+Du1mriTcwbhiyugJoQMePHpGyAtexAL39TeFnMHbEtGmQvRNt+CzaZnwGOeUfYW1UzOVqbs1rzVEXiu7GUGC6YQy/bhAFd1YpMZDvVRrN0NocCfGZ9Yai1RsyylQs1kAa/0mi98lxJIik8DyvZcLmR9fT/WrqOhvPoRs=
+                    type ssh-rsa
+                }
+                public-keys id_lan {
+                    key AAAAB3NzaC1yc2EAAAADAQABAAABgQCg1b/htShVK8JYIlJiBK2lKmDGYrASBS2ItEFdcOA5OWfLoObKM2U3rYa7k3XwGEzf6y9omSGu2+BlQoC30GTKzrb03vu3ClOD2fJ5mtqDMJqm9mFrqHpGZuQlg6X26iggNuA1dcZdzwh75ySfq8u+hUWmYfTncyKDQ8pl8sEFRiRrXM0e+xjxP4mdDXHCBXev0RkJxPYQ1uxH/CTdbq0ef1TjDB9c51zaX5Mu23WJIlwPqPjTipInUD1mU5O8+DN6gsQ4kpnHprfmatILoRlvSKjf5D2Eha/yMgLfh9ys1OrbAZTvvrd/9Sq+f+bp9/rqGYt8ex+Rd6zRKiTzvvEfRIqtbF+Du1mriTcwbhiyugJoQMePHpGyAtexAL39TeFnMHbEtGmQvRNt+CzaZnwGOeUfYW1UzOVqbs1rzVEXiu7GUGC6YQy/bhAFd1YpMZDvVRrN0NocCfGZ9Yai1RsyylQs1kAa/0mi98lxJIik8DyvZcLmR9fT/WrqOhvPoRs=
+                    type ssh-rsa
+                }
             }
         }
         user vyos {
             authentication {
                 encrypted-password $6$lEgayS1Fn7$Y4.VS/yBAdhxkmgDAzrzUN/ibgmO9rRgblmnMMxvFqN1D89m/XTqRxk7.DW60cj5Dvv9PC5c0n0V3M7weIk9v/
-                plaintext-password ""
             }
         }
     }

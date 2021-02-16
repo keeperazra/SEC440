@@ -1,0 +1,27 @@
+---
+  - name: Update web servers
+    hosts: web
+    become: yes
+    tasks:
+
+      - name: Unset welcome.conf
+        ansible.builtin.copy:
+            src: templates/web/welcome.conf
+            dest: /etc/httpd/conf.d/welcome.conf
+            owner: root
+            group: root
+            mode: "0644"
+
+      - name: Template index.html
+        ansible.builtin.template:
+            src: templates/web/index.html.j2
+            dest: /var/www/html/index.html
+            owner: root
+            group: root
+            mode: "0644"
+
+      - name: restart httpd
+        ansible.builtin.service:
+            name: httpd
+            state: restarted
+

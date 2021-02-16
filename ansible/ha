@@ -1,0 +1,4 @@
+[ha]
+10.0.6.6 hostname=ha01 vrrp_host_type=MASTER vrrp_priority=255
+10.0.6.7 hostname=ha02 vrrp_host_type=BACKUP vrrp_priority=254
+

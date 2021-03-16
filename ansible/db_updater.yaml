@@ -14,7 +14,7 @@
             state: present
 
       - name: Install my.cnf file
-        ansible.builtin.copy:
+        ansible.builtin.template:
             src: templates/db/my.cnf
             dest: /etc/mysql/mariadb.cnf
             owner: root
@@ -30,6 +30,10 @@
         ansible.builtin.copy:
             src: templates/db/override.conf
             dest: /etc/systemd/system/mysql.service.d/override.conf
+
+      - name: Boostrap the first node
+        when: inventory_hostname in groups['bootstrap']
+        command: galera_new_cluster
 
       - name: Reload systemctl
         command: systemctl daemon-reload

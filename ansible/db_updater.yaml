@@ -5,6 +5,24 @@
     hosts: db
     tasks:
 
+      - name: Install keepalived
+        ansible.builtin.package:
+            name: keepalived
+            state: present
+
+      - name: Apply config template
+        ansible.builtin.template:
+            src: templates/db/keepalived.conf.j2
+            dest: /etc/keepalived/keepalived.conf
+            owner: root
+            group: root
+            mode: "0644"
+
+      - name: Restart keepalived service
+        ansible.builtin.service:
+            name: keepalived
+            state: restarted
+
       - name: Install MariaDB and Galera
         ansible.builtin.package:
             name:

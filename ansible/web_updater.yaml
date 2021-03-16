@@ -9,6 +9,11 @@
             name: httpd
             state: present
 
+      - name: Install php
+        ansible.builtin.package:
+            name: php
+            state: present
+
       - name: Updated httpd.conf
         ansible.builtin.copy:
             src: templates/web/httpd.conf
@@ -31,23 +36,23 @@
             state: present
 
       - name: Clone WackoWiki repository
-        ansible.builtin.command:
+        command:
             chdir: /var/www/html
             cmd: git clone -b 6.0.18 --single-branch https://github.com/WackoWiki/wackowiki w
             creates: /var/www/html/w/README.md
 
       - name: Pull WackoWiki updates (if any)
-        ansible.builtin.command:
+        command:
             chdir: /var/www/html/w
             cmd: git pull
 
       - name: Ensure proper ownership of files
-        ansible.builtin.command:
+        command:
             chdir: /var/www/html/w/wacko
             cmd: chmod 0775 _cache/config/ _cache/feed/ _cache/page/ _cache/query/ _cache/session/ _cache/template/ file/backup/ file/global/ file/perpage/ file/thumb/ xml/
 
       - name: Proper file ownership part two
-        ansible.builtin.command:
+        command:
             chdir: /var/www/html/w/wacko
             cmd: chmod 666 config/config.php config/lock config/lock_ap sitemap.xml
 

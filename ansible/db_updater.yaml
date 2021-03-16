@@ -5,9 +5,23 @@
     hosts: db
     tasks:
 
-      - name: Install MariaDB
+      - name: Install MariaDB and Galera
         ansible.builtin.package:
-            name: mariadb-server
+            name:
+              - mariadb-server
+              - mariadb-client
+              - galera-3
             state: present
 
+      - name: Install my.cnf file
+        ansible.builtin.copy:
+            src: templates/db/my.cnf
+            dest: /etc/mysql/mariadb.cnf
+            owner: root
+            group: root
+            mode: "0644"
 
+      - name: Ensure mysqld is running (note, may need to bootstrap)
+        ansible.builtin.service:
+            name: mysqld
+            state: restarted

@@ -31,9 +31,12 @@
             src: templates/db/override.conf
             dest: /etc/systemd/system/mysql.service.d/override.conf
 
+      - name: Reload systemctl
+        command: systemctl daemon-reload
+
       - name: Boostrap the first node
         when: inventory_hostname in groups['bootstrap']
         command: galera_new_cluster
 
-      - name: Reload systemctl
-        command: systemctl daemon-reload
+      - name: Restart mariadb
+        when: inventory_hostname not in groups['bootstrap']

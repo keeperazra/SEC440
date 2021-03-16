@@ -21,6 +21,11 @@
             group: root
             mode: "0644"
 
+      - name: Override values for mysqld.service
+        ansible.builtin.copy:
+            src: templates/db/override.conf
+            dest: /etc/systemd/system/mysql.service.d/override.conf
+
       - name: Ensure mysqld is running (note, may need to bootstrap)
         ansible.builtin.service:
             name: mysqld

@@ -7,7 +7,7 @@
       - name: Ensure installation of httpd
         ansible.builtin.package:
             name: httpd
-            state: present
+            state: latest
 
       - name: Install epel and remirepo stuff
         ansible.builtin.package:
@@ -25,7 +25,7 @@
       - name: Install php
         ansible.builtin.package:
             name: php
-            state: present
+            state: latest
 
       - name: Updated httpd.conf
         ansible.builtin.copy:

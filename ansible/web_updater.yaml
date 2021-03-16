@@ -49,6 +49,9 @@
             group: root
             mode: "0644"
 
+      - name: Set selinux bools
+        command: setsebool httpd_can_network_connect 1 && setsebool httpd_can_network_connect_db 1
+
       - name: Install git
         ansible.builtin.package:
             name: git
@@ -64,6 +67,11 @@
         command:
             chdir: /var/www/html/w
             cmd: git pull
+
+      - name: Install config.php
+        ansible.builtin.template:
+            src: templates/web/config.php.j2
+            dest: /var/www/html/w/wacko/config/config.php
 
       - name: Ensure proper ownership of files
         command:

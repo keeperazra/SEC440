@@ -21,6 +21,11 @@
             group: root
             mode: "0644"
 
+      - name: Create override directory
+        ansible.builtin.file:
+            path: /etc/systemd/system/mysql.service.d
+            state: directory
+
       - name: Override values for mysqld.service
         ansible.builtin.copy:
             src: templates/db/override.conf

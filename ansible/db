@@ -1,7 +1,7 @@
 [db]
-10.0.5.11 hostname=db1 node_address=10.0.5.11
-10.0.5.12 hostname=db2 node_address=10.0.5.12
-10.0.5.13 hostname=db3 node_address=10.0.5.13
+10.0.5.11 hostname=db1 node_address=10.0.5.11 vrrp_host_type=MASTER vrrp_priority=255
+10.0.5.12 hostname=db2 node_address=10.0.5.12 vrrp_host_type=BACKUP vrrp_priority=254
+10.0.5.13 hostname=db3 node_address=10.0.5.13 vrrp_host_type=BACKUP vrrp_priority=253
 
 [bootstrap]
 10.0.5.11

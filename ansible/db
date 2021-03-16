@@ -1,0 +1,5 @@
+[db]
+10.0.5.11 hostname=db1
+10.0.5.12 hostname=db2
+10.0.5.13 hostname=db3
+

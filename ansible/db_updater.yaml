@@ -31,6 +31,9 @@
             src: templates/db/override.conf
             dest: /etc/systemd/system/mysql.service.d/override.conf
 
+      - name: Reload systemctl
+        command: systemctl daemon-reload
+
       - name: Ensure mysqld is running (note, may need to bootstrap)
         ansible.builtin.service:
             name: mysqld

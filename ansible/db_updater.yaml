@@ -15,7 +15,7 @@
 
       - name: Install my.cnf file
         ansible.builtin.template:
-            src: templates/db/my.cnf
+            src: templates/db/my.cnf.j2
             dest: /etc/mysql/mariadb.cnf
             owner: root
             group: root

@@ -23,6 +23,7 @@
 !includedir /etc/mysql/mariadb.conf.d/
 
 [mariadb]
+bind_address = 0.0.0.0
 wsrep_provider = /usr/lib/libgalera_smm.so
 wsrep_cluster_address = gcomm://10.0.5.11,10.0.5.12,10.0.5.13
 binlog_format = ROW

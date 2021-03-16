@@ -9,6 +9,19 @@
             name: httpd
             state: present
 
+      - name: Install epel and remirepo stuff
+        ansible.builtin.package:
+            name:
+              - epel-release
+              - yum-utils
+              - http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+
+      - name: Enable remi-php74
+        command: yum-config-manager --enable remi-php74
+
+      - name: Flush yum
+        command: yum clean all
+
       - name: Install php
         ansible.builtin.package:
             name: php

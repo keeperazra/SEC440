@@ -1,0 +1,30 @@
+---
+
+  - name: Cleanup Wacko Wiki install
+    hosts: web
+    become: yes
+    tasks:
+
+    - name: Halt httpd
+      ansible.builtin.service:
+        name: httpd
+        state: stopped
+
+    - name: Clean out /var/www/html/
+      ansible.builtin.file:
+        path: /var/www/html/w
+        state: absent
+
+    - name: Update httpd.conf
+      ansible.builtin.copy:
+        src: templates/httpd.conf
+        dest: /etc/httpd/conf/httpd.conf
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Start httpd
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+

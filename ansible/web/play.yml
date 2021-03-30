@@ -1,0 +1,40 @@
+---
+  - name: Update web servers
+    hosts: web
+    become: yes
+    tasks:
+
+    - name: Ensure installation of httpd
+      ansible.builtin.package:
+        name: httpd
+        state: latest
+
+    - name: Update httpd.conf
+      ansible.builtin.copy:
+        src: templates/httpd.conf
+        dest: /etc/httpd/conf/httpd.conf
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Unset welcome.conf
+      ansible.builtin.copy:
+        src: templates/welcome.conf
+        dest: /etc/httpd/conf.d/welcome.conf
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Create basic index.html
+      ansible.builtin.template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: restart httpd
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+

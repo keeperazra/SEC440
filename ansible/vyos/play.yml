@@ -1,0 +1,11 @@
+---
+
+  - name: Update vyos configuration from a config.boot template
+    hosts: vyos
+    tasks:
+
+      - name: Apply config.boot template
+        vyos.vyos.vyos_config:
+            src: templates/config.j2
+            save: yes
+

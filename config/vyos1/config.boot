@@ -1,35 +1,16 @@
-high-availability {
-    vrrp {
-        group langroup1 {
-            interface eth1
-            virtual-address 10.0.5.1/24
-            vrid 51
-        }
-        group optgroup1 {
-            interface eth2
-            virtual-address 10.0.6.1/24
-            vrid 61
-        }
-        group wangroup1 {
-            interface eth0
-            virtual-address 10.0.17.71/24
-            vrid 151
-        }
-    }
-}
 interfaces {
     ethernet eth0 {
-        address 10.0.17.11/24
+        address 10.0.17.71/24
         description WAN
         hw-id 00:50:56:b3:ae:36
     }
     ethernet eth1 {
-        address 10.0.5.2/24
+        address 10.0.5.1/24
         description LAN
         hw-id 00:50:56:b3:ff:ac
     }
     ethernet eth2 {
-        address 10.0.6.2/24
+        address 10.0.6.1/24
         description OPT
         hw-id 00:50:56:b3:2b:4a
     }
@@ -47,7 +28,7 @@ nat {
             inbound-interface eth0
             protocol tcp
             translation {
-                address 10.0.6.5
+                address 10.0.5.100
             }
         }
     }
@@ -86,6 +67,7 @@ service {
             allow-from 10.0.5.0/24
             allow-from 10.0.6.0/24
             listen-address 10.0.5.1
+            listen-address 10.0.6.1
         }
     }
     ssh {
